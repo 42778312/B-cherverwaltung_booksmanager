@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Diagnostics;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
@@ -95,15 +96,39 @@ namespace Bücherverwaltung_booksmanager
         }
         private void bt_Edit_Click(object sender, EventArgs e)
         {
-            DataGridViewRow newDataRow = dataGridView1.Rows[index];
-            newDataRow.Cells[0].Value = textBox1.Text;
-            newDataRow.Cells[1].Value = textBox2.Text;
-            newDataRow.Cells[2].Value = textBox3.Text;
-            newDataRow.Cells[3].Value = textBox4.Text;
-            newDataRow.Cells[4].Value = textBox5.Text;
-   
+            DataGridViewRow row = dataGridView1.Rows[index];
+            int id = int.Parse(row.Cells["ID"].Value.ToString());
 
+            string title = textBox2.Text;
+            string autor = textBox3.Text;
+
+            if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(autor))
+            {
+                MessageBox.Show("  Title or Autor ist falsch.");
+                return;
+            }
+
+            int pages, price;
+            if (int.TryParse(textBox4.Text, out pages) && int.TryParse(textBox5.Text, out price))
+            {
+                // Update the selected row with the new values
+                row.Cells["Title"].Value = title;
+                row.Cells["Autor"].Value = autor;
+                row.Cells["Pages"].Value = pages;
+                row.Cells["Preis"].Value = price;
+
+                // Clear the text boxes after updating
+                textBox2.Text = string.Empty;
+                textBox3.Text = string.Empty;
+                textBox4.Text = string.Empty;
+                textBox5.Text = string.Empty;
+            }
+            else
+            {
+                MessageBox.Show("Please provide a valid integer value for Pages and Preis.");
+            }
         }
+
 
         private void button3_Click(object sender, EventArgs e)
         {
