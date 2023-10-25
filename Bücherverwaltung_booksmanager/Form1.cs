@@ -93,6 +93,22 @@ namespace Bücherverwaltung_booksmanager
             textBox4.Text = row.Cells[3].Value.ToString();
             textBox5.Text = row.Cells[4].Value.ToString();
 
+            if ((dataGridView1.Rows.Count -1) == index)
+            {
+                bt_Edit.Enabled = false;
+            }
+            else
+            {
+                bt_Edit.Enabled = true;
+            }
+            if ((dataGridView1.Rows.Count - 1) == index)
+            {
+                button3.Enabled = false;
+            }
+            else
+            {
+                button3.Enabled = true;
+            }
         }
         private void bt_Edit_Click(object sender, EventArgs e)
         {
